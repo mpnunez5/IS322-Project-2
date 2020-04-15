@@ -5,7 +5,45 @@ import InProgress from './TaskItems/InProgress';
 import Review from './TaskItems/Review'
 import Done from './TaskItems/Done';
 
+const MOBILE_BREAKPOINT = 768;
+
 class TaskList extends React.Component {
+  state = {
+    view: '',
+    browserWidth: 0,
+    breakpoint: 'mobile'
+  }
+
+  onViewChange(view) {
+    this.setState({ view });
+    console.log(this.state.view);
+  }
+
+  onFormSubmit = (event) => {
+    event.preventDefault();
+
+    this.props.onSubmit(this.state.view);
+    this.setState({ view: '' , browserWidth: 0, breakpoint: 'mobile'})
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  }
+
+  handleResize = () => {
+    const browserWidth = window.innerWidth;
+    let breakpoint = 'mobile';
+
+    if (browserWidth > MOBILE_BREAKPOINT ){
+      breakpoint = 'desktop';
+    }
+    else{
+      breakpoint = 'mobile';
+    }
+
+    this.setState({ breakpoint, browserWidth });
+  }
 
   markDone = (task) => {
     const taskIndex = this.props.tasks.findIndex(t => t.id === task.id);
@@ -58,30 +96,68 @@ class TaskList extends React.Component {
       return <Done task={task} key={task.id}  markDone={this.markDone} markUndone={this.markUndone}/>
     });
 
-    return (
-      //bootstrap to make the columns horizontal
-      <ul className="list-group list-group-horizontal">
+    if(this.state.breakpoint==='mobile'){
+      return(
 
-        <li className="list-group-item list-group-item-danger"><h3>To Do</h3>
-          <ul className="list-group"> <li>{ ToDoItem }</li></ul>
-        </li>
+      <ul className="list-group list-group-vertical">
+      <li className="list-group-item list-group-item-danger"><h3>To Do</h3>
+        <ul className="list-group">
+          <li>{ToDoItem}</li>
+        </ul>
+      </li>
 
-        <li className="list-group-item list-group-item-warning"><h3>In Progress</h3>
-          <ul className="list-group"> <li>{ InProgressItem }</li></ul>
-        </li>
+      <li className="list-group-item list-group-item-warning"><h3>In Progress</h3>
+        <ul className="list-group">
+          <li>{InProgressItem}</li>
+        </ul>
+      </li>
 
-        <li className="list-group-item list-group-item-primary"><h3>Review</h3>
-          <ul className="list-group"> <li>{ ReviewItem }</li></ul>
-        </li>
-
-        <li className="list-group-item list-group-item-success"><h3>Done</h3>
-          <ul className="list-group"> <li>{ DoneItem }</li></ul>
-        </li>
-
+      <li className="list-group-item list-group-item-primary"><h3>Review</h3>
+      <ul className="list-group">
+        <li>{ReviewItem}</li>
       </ul>
+      </li>
 
-    )
-  }
+      <li className="list-group-item list-group-item-success"><h3>Done</h3>
+        <ul className="list-group">
+          <li>{DoneItem}</li>
+        </ul>
+      </li>
+      </ul>
+      )
+        } else{
+
+          return(
+            //bootstrap to make the columns horizontal
+            <ul className="list-group list-group-horizontal">
+
+              <li className="list-group-item list-group-item-danger"><h3>To Do</h3>
+                <ul className="list-group">
+                  <li>{ToDoItem}</li>
+                </ul>
+              </li>
+
+              <li className="list-group-item list-group-item-warning"><h3>In Progress</h3>
+                <ul className="list-group">
+                  <li>{InProgressItem}</li>
+                </ul>
+              </li>
+
+              <li className="list-group-item list-group-item-primary"><h3>Review</h3>
+                <ul className="list-group">
+                  <li>{ReviewItem}</li>
+                </ul>
+              </li>
+
+              <li className="list-group-item list-group-item-success"><h3>Done</h3>
+                <ul className="list-group">
+                  <li>{DoneItem}</li>
+                </ul>
+              </li>
+            </ul>
+          )
+        }
+      }
 }
 
 export default TaskList;

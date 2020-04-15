@@ -16,7 +16,9 @@ class AddTask extends React.Component {
       <div className="card border-dark mb-3">
         <div className="card-body" style={{padding: 10}}>
           <h5 className="card-title text-md-center">Task Manager</h5>
+
           <form className="task-input form-group" onSubmit={this.onFormSubmit}>
+
             <label htmlFor="newTask">Enter New Task Name</label>
             <input type="text" className="form-control"
                    name="newTask"
