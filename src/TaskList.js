@@ -19,13 +19,6 @@ class TaskList extends React.Component {
     console.log(this.state.view);
   }
 
-  onFormSubmit = (event) => {
-    event.preventDefault();
-
-    this.props.onSubmit(this.state.view);
-    this.setState({ view: '' , browserWidth: 0, breakpoint: 'mobile'})
-  }
-
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
@@ -98,33 +91,34 @@ class TaskList extends React.Component {
 
     if(this.state.breakpoint==='mobile'){
       return(
+          <div>
+            <ul className="list-group list-group-vertical">
+            <li className="list-group-item list-group-item-danger"><h3>To Do</h3>
+              <ul className="list-group">
+                <li>{ToDoItem}</li>
+              </ul>
+            </li>
 
-      <ul className="list-group list-group-vertical">
-      <li className="list-group-item list-group-item-danger"><h3>To Do</h3>
-        <ul className="list-group">
-          <li>{ToDoItem}</li>
-        </ul>
-      </li>
+            <li className="list-group-item list-group-item-warning"><h3>In Progress</h3>
+              <ul className="list-group">
+                <li>{InProgressItem}</li>
+              </ul>
+            </li>
 
-      <li className="list-group-item list-group-item-warning"><h3>In Progress</h3>
-        <ul className="list-group">
-          <li>{InProgressItem}</li>
-        </ul>
-      </li>
+            <li className="list-group-item list-group-item-primary"><h3>Review</h3>
+            <ul className="list-group">
+              <li>{ReviewItem}</li>
+            </ul>
+            </li>
 
-      <li className="list-group-item list-group-item-primary"><h3>Review</h3>
-      <ul className="list-group">
-        <li>{ReviewItem}</li>
-      </ul>
-      </li>
-
-      <li className="list-group-item list-group-item-success"><h3>Done</h3>
-        <ul className="list-group">
-          <li>{DoneItem}</li>
-        </ul>
-      </li>
-      </ul>
-      )
+            <li className="list-group-item list-group-item-success"><h3>Done</h3>
+              <ul className="list-group">
+                <li>{DoneItem}</li>
+              </ul>
+            </li>
+            </ul>
+            </div>
+          )
         } else{
 
           return(
