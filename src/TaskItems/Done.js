@@ -12,7 +12,7 @@ const Done = props => {
                 <button type="button"
                         onClick={() => props.markUndone(props.task)}
                         className="btn btn-primary btn-sm btn-block" style={{ float: 'left', padding: 0}}>
-                    Request Re-Review
+                    &lt; Request Re-Review
                 </button>
 
                 <button type="button"

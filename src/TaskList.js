@@ -1,10 +1,9 @@
 import React from 'react';
 
-import TaskItem from './TaskItem';
-import ToDo from './ToDo';
-import InProgress from './InProgress';
-import Review from './Review'
-import Done from './Done';
+import ToDo from './TaskItems/ToDo';
+import InProgress from './TaskItems/InProgress';
+import Review from './TaskItems/Review'
+import Done from './TaskItems/Done';
 
 class TaskList extends React.Component {
 
