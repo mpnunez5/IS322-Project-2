@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import TaskList from './TaskList';
+import AddTask from './AddTask';
+
+class App extends React.Component {
+  state = {
+    tasks: [],
+    errorMessage: ''
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
+    axios.get('http://my-json-server.typicode.com/bnissen24/project2DB/posts')
+      .then(response => {
+        this.setState({ tasks: response.data });
+      }).catch(error => {
+        this.setState({ errorMessage: error.message });
+      });
+  }
+
+  onAddTask = (taskName) => {
+    let tasks = this.state.tasks;
+    tasks.push({
+      title: taskName,
+      id: this.state.tasks.length + 1,
+      type: 'task',
+      column: 'todo'
+    });
+
+    this.setState({ tasks });
+  }
+
+  onUpdateTaskList = (newTaskList) => {
+    this.setState({ tasks: newTaskList });
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <AddTask onSubmit={this.onAddTask} />
+        <TaskList tasks={this.state.tasks} onUpdateTaskList={this.onUpdateTaskList} />
+      </div>
+    );
+  }
 }
 
 export default App;
