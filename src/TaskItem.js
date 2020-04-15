@@ -2,7 +2,8 @@ import React from 'react';
 
 const TaskItem = props => {
   return (
-      <div className="card" style={{width: 250, height: 200}}>
+      //display tasks in a card like UI
+      <div className="card">
         <div className="card-body">
           <h5 className="card-title">{props.task.title}</h5>
           <h6 className="card-subtitle mb-2 text-muted">ID:{props.task.id} </h6>
