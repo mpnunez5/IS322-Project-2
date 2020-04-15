@@ -1,6 +1,10 @@
 import React from 'react';
 
 import TaskItem from './TaskItem';
+import ToDo from './ToDo';
+import InProgress from './InProgress';
+import Review from './Review'
+import Done from './Done';
 
 class TaskList extends React.Component {
 
@@ -17,6 +21,7 @@ class TaskList extends React.Component {
     else if (task.column==='done') {
       taskList.splice(taskIndex, 1);
     }
+
     console.log(this.props);
     this.props.onUpdateTaskList(taskList);
   }
@@ -40,18 +45,18 @@ class TaskList extends React.Component {
 
   render() {
     const ToDoItem = this.props.tasks.filter(task => task.column === 'todo').map(task => {
-      return <TaskItem task={task} key={task.id}  markUp={this.markUp} markDown={this.markDown}/>
+      return <ToDo task={task} key={task.id}  markDone={this.markDone} markUndone={this.markUndone}/>
     });
 
     const InProgressItem = this.props.tasks.filter(task => task.column === 'in-progress').map(task => {
-      return <TaskItem task={task} key={task.id}  markUp={this.markUp} markDown={this.markDown}/>
+      return <InProgress task={task} key={task.id}  markDone={this.markDone} markUndone={this.markUndone}/>
     });
 
     const ReviewItem = this.props.tasks.filter(task => task.column === 'review').map(task => {
-      return <TaskItem task={task} key={task.id}  markUp={this.markUp} markDown={this.markDown}/>
+      return <Review task={task} key={task.id}  markDone={this.markDone} markUndone={this.markUndone}/>
     });
     const DoneItem = this.props.tasks.filter(task => task.column === 'done').map(task => {
-      return <TaskItem task={task} key={task.id}  markUp={this.markUp} markDown={this.markDown}/>
+      return <Done task={task} key={task.id}  markDone={this.markDone} markUndone={this.markUndone}/>
     });
 
     return (
